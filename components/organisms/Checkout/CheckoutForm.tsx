@@ -8,6 +8,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
+import ModalAcceptBuy from "../Modals/ModalAcceptBuy";
 
 const CheckoutForm = () => {
   const { cartItems, total, clear } = useContext(CartContext);
