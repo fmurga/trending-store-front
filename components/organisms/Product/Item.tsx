@@ -11,12 +11,13 @@ const Item = ({ item }) => {
       </a>
       <hr className="text-gray-500" />
       <div className="flex h-60 w-auto">
-        <img className="object-contain" src={item.pictureUrl} alt={item.title} />
+        <img className="object-contain" src={item.img} alt={item.title} />
       </div>
       <p className="text-center text-violet-700 font-bold">${item.price}</p>
       <Link
         to={`/item/${item.id}`}
-        className="w-7/12 p-2 text-center bg-purple-600 hover:bg-purple-400 text-white font-bold rounded-lg">
+        className="w-7/12 p-2 text-center bg-purple-600 hover:bg-purple-400 text-white font-bold rounded-lg"
+      >
         Ver Producto
       </Link>
     </div>

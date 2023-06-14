@@ -49,7 +49,7 @@ const NavItem = ({ id, link, name, subcategories }: navItem) => {
         <ul className="bg-black border rounded-sm transform scale-0 group-hover:scale-100 absolute transition duration-150 ease-in-out origin-top  min-w-32 w-40">
           {subcategories &&
             subcategories.map((category) => (
-              <Link key={category.id} href={`${link}/${category.path}`}>
+              <Link key={category.id} href={`/${link}/${category.path}`}>
                 <li className="rounded-sm px-3 py-1 hover:bg-indigo-400">
                   {category.name}
                 </li>

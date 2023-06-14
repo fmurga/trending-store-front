@@ -1,6 +1,6 @@
+import { SizesContext } from "@/contexts/SizesProvider";
 import { RadioGroup } from "@headlessui/react";
 import React, { useContext, useEffect, useState } from "react";
-import { SizesContext } from "../../contexts/SizesProvider";
 
 const classNames = (...classes) => {
   return classes.filter(Boolean).join(" ");
@@ -8,14 +8,16 @@ const classNames = (...classes) => {
 
 const SizesSelector = ({ sizes }) => {
   const [selectedSize, setSelectedSize] = useState({});
-  const { setSharedSelectedSize } = useContext(SizesContext);
+  const { setSharedSize } = useContext(SizesContext);
 
   useEffect(() => {
-    setSharedSelectedSize(selectedSize);
+    setSharedSize(selectedSize);
   }, [selectedSize]);
 
   useEffect(() => {
-    let initialSize = sizes.find((size) => size.stock > 0 && size.inStock === true);
+    let initialSize = sizes.find(
+      (size) => size.stock > 0 && size.inStock === true
+    );
     setSelectedSize(initialSize);
   }, []);
 
@@ -29,8 +31,11 @@ const SizesSelector = ({ sizes }) => {
         <RadioGroup
           value={selectedSize}
           onChange={setSelectedSize}
-          className="mt-4">
-          <RadioGroup.Label className="sr-only">Elija un talle</RadioGroup.Label>
+          className="mt-4"
+        >
+          <RadioGroup.Label className="sr-only">
+            Elija un talle
+          </RadioGroup.Label>
           <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
             {sizes &&
               sizes.map((size) => (
@@ -47,7 +52,8 @@ const SizesSelector = ({ sizes }) => {
                       checked ? "ring-1 ring-indigo-500" : "",
                       "group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6"
                     )
-                  }>
+                  }
+                >
                   {({ active, checked }) => (
                     <>
                       <RadioGroup.Label as="span">{size.name}</RadioGroup.Label>
@@ -65,12 +71,14 @@ const SizesSelector = ({ sizes }) => {
                       ) : (
                         <span
                           aria-hidden="true"
-                          className="absolute -inset-px rounded-md border-2 border-gray-200 pointer-events-none">
+                          className="absolute -inset-px rounded-md border-2 border-gray-200 pointer-events-none"
+                        >
                           <svg
                             className="absolute inset-0 w-full h-full text-gray-200 stroke-2"
                             viewBox="0 0 100 100"
                             preserveAspectRatio="none"
-                            stroke="currentColor">
+                            stroke="currentColor"
+                          >
                             <line
                               x1={0}
                               y1={100}

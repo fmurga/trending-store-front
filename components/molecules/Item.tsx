@@ -5,16 +5,12 @@ const Item = ({ item }: any) => {
     <div className="flex flex-col justify-center items-center w-80 py-5 m-2 border-2 rounded-lg gap-2 shadow-md hover:shadow-xl">
       <a href="_" className="">
         <h2 className="text-purple-600 font-bold text-lg hover:text-purple-400">
-          {item.title}
+          {item.name}
         </h2>
       </a>
       <hr className="text-gray-500" />
       <div className="flex h-60 w-auto">
-        <img
-          className="object-contain"
-          src={item.pictureUrl}
-          alt={item.title}
-        />
+        <img className="object-contain" src={item.img} alt={item.name} />
       </div>
       <p className="text-center text-violet-700 font-bold">${item.price}</p>
       <Link

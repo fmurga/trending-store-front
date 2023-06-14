@@ -13,7 +13,7 @@ const CheckoutItem = ({ item }) => {
             <div className="inline-flex gap-2">
               <img
                 className="rounded-lg"
-                src={item.pictureUrl}
+                src={item.img}
                 alt={item.title}
                 width={100}
               />

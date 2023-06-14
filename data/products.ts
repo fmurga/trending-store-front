@@ -7,7 +7,7 @@ export const products = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
     initial: 1,
-    pictureUrl:
+    img:
       "https://i.pinimg.com/236x/47/d7/5e/47d75e955f4e4434d85be86f5f6fb290.jpg",
     category: "mujer",
     sizes: [
@@ -28,7 +28,7 @@ export const products = [
     stock: 6,
     description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
     initial: 1,
-    pictureUrl:
+    img:
       "https://http2.mlstatic.com/D_NQ_NP_817298-MLA31993540345_082019-O.webp",
     category: "mujer",
     sizes: [
@@ -49,7 +49,7 @@ export const products = [
     stock: 3,
     description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
     initial: 1,
-    pictureUrl:
+    img:
       "https://i.pinimg.com/564x/39/d1/7a/39d17a69059bbdc40df31af7a663686a.jpg",
     category: "mujer",
     sizes: [
@@ -70,7 +70,7 @@ export const products = [
     stock: 4,
     description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
     initial: 1,
-    pictureUrl: "https://www.kvnstatic.com/productos/M5893047/g/M5893047.jpg",
+    img: "https://www.kvnstatic.com/productos/M5893047/g/M5893047.jpg",
     category: "mujer",
     sizes: [
       { name: "XXS", inStock: false, stock: 4 },
@@ -90,7 +90,7 @@ export const products = [
     stock: 4,
     description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
     initial: 1,
-    pictureUrl: "/assets/images/title-g1cc1c1543_1920.jpg",
+    img: "/assets/images/title-g1cc1c1543_1920.jpg",
     category: "hombre",
     sizes: [
       { name: "XXS", inStock: false, stock: 4 },
@@ -110,7 +110,7 @@ export const products = [
     stock: 4,
     description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
     initial: 1,
-    pictureUrl: "/assets/images/straight-looking-g18af6e061_1920.jpg",
+    img: "/assets/images/straight-looking-g18af6e061_1920.jpg",
     category: "men",
     sizes: [
       { name: "XXS", inStock: false, stock: 4 },
@@ -130,7 +130,7 @@ export const products = [
     stock: 4,
     description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
     initial: 1,
-    pictureUrl: "/assets/images/07_MINI_MAYORAL.webp",
+    img: "/assets/images/07_MINI_MAYORAL.webp",
     category: "niños",
     sizes: [
       { name: "XXS", inStock: false, stock: 4 },
