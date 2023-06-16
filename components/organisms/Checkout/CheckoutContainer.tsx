@@ -1,3 +1,4 @@
+"use client";
 import React, { useContext } from "react";
 import CheckoutForm from "./CheckoutForm";
 import CheckoutItemList from "./CheckoutItemList";

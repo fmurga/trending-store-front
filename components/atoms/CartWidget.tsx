@@ -1,4 +1,3 @@
-import Link from "next/link";
 import ShoppingCart from "./icons/ShopCart";
 
 const CartWidget = ({ itemCount }) => {

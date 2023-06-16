@@ -4,12 +4,9 @@ import { SizesContext } from "@/contexts/SizesProvider";
 import React, { useContext, useEffect, useState } from "react";
 import SizesSelector from "./SizesSelector";
 import ItemCount from "./ItemCount";
-import { ButtonContainer } from "../buttons/ButtonContainer";
 import ShoppingCart from "@/components/atoms/icons/ShopCart";
 import ModalAccept from "../Modals/ModalAccept";
 import { getItemById } from "@/helpers/getItemById";
-import { redirect } from "next/navigation";
-import Link from "next/link";
 
 const ItemDetail = ({ item }) => {
   const { sharedSize } = useContext(SizesContext);
@@ -43,17 +40,13 @@ const ItemDetail = ({ item }) => {
     setOpenModal(true);
   };
 
-  const endBuy = () => {
-    redirect("/cart");
-  };
-
   return (
     <>
       <div className="container">
         <div className="flex flex-col lg:flex-row mx-auto">
           <div className="w-full lg:w-6/12 flex flex-col gap-2 mx-auto">
             <div className="flex justify-center items-center  border-2 rounded-lg p-10">
-              {item && <img src={item.img} alt={item.title} width={"50%"} />}
+              {item && <img src={item.img} alt={item.name} width={"50%"} />}
             </div>
           </div>
           <div className="w-full lg:w-6/12 flex flex-col mx-auto px-10 justify-between">
@@ -61,7 +54,7 @@ const ItemDetail = ({ item }) => {
               <div className="flex flex-row justify-between items-center">
                 {item && (
                   <h1 className="text-purple-500 font-bold text-4xl">
-                    {item.title}
+                    {item.name}
                   </h1>
                 )}
 
@@ -78,13 +71,13 @@ const ItemDetail = ({ item }) => {
                   onAdd={onAdd}
                 />
                 {count > 0 && (
-                  <Link
+                  <a
                     href={"/cart"}
                     className="px-3 py-2 w-max  text-white flex justify-center items-center cursor-pointer bg-purple-600 rounded-full hover:bg-purple-400 disabled:bg-purple-400 "
                   >
                     <ShoppingCart />
                     Finalizar Compra
-                  </Link>
+                  </a>
                 )}
               </>
             )}

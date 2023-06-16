@@ -14,13 +14,13 @@ const CheckoutItem = ({ item }) => {
               <img
                 className="rounded-lg"
                 src={item.img}
-                alt={item.title}
+                alt={item.name}
                 width={100}
               />
               <div>
-                <Link href={`/item/${item.id}`}>
+                <Link href={`/item/${item._id}`}>
                   <h2 className="text-purple-600 font-bold text-md">
-                    {item.title}
+                    {item.name}
                   </h2>
                 </Link>
                 <p className="text-lg font-semibold">

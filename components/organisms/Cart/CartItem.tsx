@@ -18,7 +18,7 @@ const CartItem = ({ item }: any) => {
 
   const handleSelectChange = (selectedValue: any) => {
     setSelectedValue(selectedValue);
-    modifyCartItemQuantity(item.id, selectedValue.value);
+    modifyCartItemQuantity(item._id, selectedValue.value);
   };
 
   useEffect(() => {
@@ -36,13 +36,13 @@ const CartItem = ({ item }: any) => {
             <img
               className="rounded-lg"
               src={item.img}
-              alt={item.title}
+              alt={item.name}
               width={100}
             />
             <div>
-              <Link href={`/item/${item.id}`}>
+              <Link href={`/item/${item._id}`}>
                 <h2 className="text-purple-600 font-bold text-md">
-                  {item.title}
+                  {item.name}
                 </h2>
               </Link>
               <p className="text-lg font-semibold">
@@ -63,7 +63,7 @@ const CartItem = ({ item }: any) => {
           </div>
           <div>
             <button
-              onClick={() => removeItem(item.id, size.name)}
+              onClick={() => removeItem(item._id, size.name)}
               type="button"
               className="bg-white rounded-full p-1 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
             >

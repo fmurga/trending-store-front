@@ -14,10 +14,10 @@ const CartContextProvider = ({ children }) => {
   const itemsRef = useRef(cartItems);
 
   const addItem = (item: any, quantity: number, selectedSize: string) => {
-    if (isInCart(item.id)) {
-      const aux: any = cartItems.find((prod: any) => prod.id === item.id);
+    if (isInCart(item._id)) {
+      const aux: any = cartItems.find((prod: any) => prod._id === item._id);
       const newCartItems: any = cartItems.filter(
-        (prod: any) => prod.id !== item.id
+        (prod: any) => prod._id !== item._id
       );
       const isSize = aux.sizeSelected.filter(
         (size: any) => size.name === selectedSize
@@ -39,7 +39,7 @@ const CartContextProvider = ({ children }) => {
   };
 
   const removeItem = (itemId: number, sizeName: string) => {
-    const aux = cartItems.find((item: any) => item.id === itemId);
+    const aux = cartItems.find((item: any) => item._id === itemId);
     if (aux.sizeSelected.length > 1) {
       const size = aux.sizeSelected.find((item: any) => item.name === sizeName);
 
@@ -49,7 +49,7 @@ const CartContextProvider = ({ children }) => {
       }
       setCartItems([...cartItems]);
     } else {
-      const newCartItems = cartItems.filter((item: any) => item.id !== itemId);
+      const newCartItems = cartItems.filter((item: any) => item._id !== itemId);
       setCartItems([...newCartItems]);
     }
   };
@@ -58,8 +58,8 @@ const CartContextProvider = ({ children }) => {
     itemId: number,
     newQuantity: number
   ): void => {
-    const aux = cartItems.find((prod: any) => prod.id === itemId);
-    const newCartItems = cartItems.filter((prod: any) => prod.id !== itemId);
+    const aux = cartItems.find((prod: any) => prod._id === itemId);
+    const newCartItems = cartItems.filter((prod: any) => prod._id !== itemId);
     aux.quantity = newQuantity;
     setCartItems([...newCartItems, aux]);
   };
@@ -117,11 +117,6 @@ const CartContextProvider = ({ children }) => {
       }, 0);
     };
     setItemCount(totalInCart());
-  }, [cartItems]);
-
-  useEffect(() => {
-    let aux = cartItems;
-    console.log("cartItems", aux);
   }, [cartItems]);
 
   useEffect(() => {

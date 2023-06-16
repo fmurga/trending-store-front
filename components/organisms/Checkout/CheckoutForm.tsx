@@ -52,8 +52,8 @@ const CheckoutForm = () => {
     if (isFormValid) {
       const buyer = form;
       const items = cartItems.map((item) => ({
-        id: item.id,
-        title: item.title,
+        id: item._id,
+        title: item.name,
         price: item.price,
       }));
       const order = {
@@ -85,7 +85,7 @@ const CheckoutForm = () => {
     const promises = [];
 
     cartItems.forEach((prod) => {
-      const productRef = doc(db, "products", prod.id);
+      const productRef = doc(db, "products", prod._id);
       const promise = getDoc(productRef)
         .then((snapshot) => {
           if (snapshot.exists()) {
@@ -117,7 +117,7 @@ const CheckoutForm = () => {
           aux[0].inStock = false;
         }
       });
-      const itemRef = doc(db, "products", prod.id);
+      const itemRef = doc(db, "products", prod._id);
       updateDoc(itemRef, prod);
     });
   };
