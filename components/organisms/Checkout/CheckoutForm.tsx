@@ -50,7 +50,10 @@ const CheckoutForm = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(order),
     };
-    await fetch(`/api/orders/`, requestOptions);
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API_FETCH_PATH}/api/orders/`,
+      requestOptions
+    );
   };
 
   const handleSubmit = async (e) => {
@@ -93,7 +96,9 @@ const CheckoutForm = () => {
 
     for (const prod of cartItems) {
       try {
-        const response = await fetch(`/api/clothes/${prod._id}`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_FETCH_PATH}/api/clothes/${prod._id}`
+        );
         const product = await response.json();
 
         for (const element of prod.sizeSelected) {
@@ -150,7 +155,7 @@ const CheckoutForm = () => {
           };
 
           const response = await fetch(
-            `/api/clothes/${prod._id}`,
+            `${process.env.NEXT_PUBLIC_API_FETCH_PATH}/api/clothes/${prod._id}`,
             requestOptions
           );
 
