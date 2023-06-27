@@ -76,14 +76,11 @@ const CheckoutForm = () => {
             "No se ha podido procesar la compra, intente nuevamente mas tarde"
           );
         } else {
-          console.log("updating stock");
           try {
             updateStock();
             postOrder(order);
-            // setSubmited(true);
-          } catch (error) {
-            console.log("updating failed");
-          }
+            setSubmited(true);
+          } catch (error) {}
         }
       });
     } else {
@@ -116,8 +113,6 @@ const CheckoutForm = () => {
         return false;
       }
     }
-
-    console.log("All items have stock:", isStock);
     return isStock;
   };
 
