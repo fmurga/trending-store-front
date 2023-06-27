@@ -18,8 +18,6 @@ const CheckoutForm = () => {
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [phoneError, setPhoneError] = useState("");
-  const [validForm, setValidForm] = useState(false);
-
   const [orederId, setOrderId] = useState("");
   const [open, setOpen] = useState(false);
 
@@ -46,80 +44,126 @@ const CheckoutForm = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const postOrder = async (order) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(order),
+    };
+    await fetch(`${process.env.API_FETCH_PATH}/api/orders/`, requestOptions);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let isFormValid = validateForm();
     if (isFormValid) {
       const buyer = form;
       const items = cartItems.map((item) => ({
-        id: item._id,
-        title: item.name,
-        price: item.price,
+        product: item._id,
+        sizes: [...item.sizeSelected],
       }));
       const order = {
         buyer: buyer,
-        items: items,
-        // date: serverTimestamp(),
+        detail: items,
         total: total,
       };
-      // checkItemsStock().then((res) => {
-      //   if (res.includes(false)) {
-      //     setError(
-      //       "No se ha podido procesar la compra, intente nuevamente mas tarde"
-      //     );
-      //   } else {
-      //     updateStock();
-      //     const ordersColl = collection(db, "orders");
-      //     addDoc(ordersColl, order).then(({ id }) => {
-      //       setOrderId(id);
-      //       setOpen(true);
-      //     });
-      //   }
-      // });
+      checkItemsStock().then((status) => {
+        if (!status) {
+          setError(
+            "No se ha podido procesar la compra, intente nuevamente mas tarde"
+          );
+        } else {
+          console.log("updating stock");
+          try {
+            updateStock();
+            postOrder(order);
+            // setSubmited(true);
+          } catch (error) {
+            console.log("updating failed");
+          }
+        }
+      });
     } else {
       setError("Ha ocurrido un error en el Formulario");
     }
   };
 
-  const checkItemsStock = () => {
-    const promises = [];
+  const checkItemsStock = async () => {
+    let isStock = true; // Initialize isStock as true
 
-    cartItems.forEach((prod) => {
-      const productRef = doc(db, "products", prod._id);
-      const promise = getDoc(productRef)
-        .then((snapshot) => {
-          if (snapshot.exists()) {
-            prod.sizeSelected.forEach((element) => {
-              const aux = snapshot
-                .data()
-                .sizes.filter((size) => size.name === element.name);
-              console.log("aux", aux);
-              if (aux[0].stock < element.peritem) {
-                return false;
-              } else {
-                return true;
-              }
-            });
+    for (const prod of cartItems) {
+      try {
+        const response = await fetch(
+          `${process.env.API_FETCH_PATH}/api/clothes/${prod._id}`
+        );
+        const product = await response.json();
+
+        for (const element of prod.sizeSelected) {
+          const size = product.sizes.find((size) => size.name === element.name);
+          if (size && size.stock < element.peritem) {
+            console.log(
+              `Product ${prod._id} - Size ${element.name} is out of stock`
+            );
+            isStock = false;
+            break; // Exit the loop if any item is out of stock
           }
-        })
-        .catch((err) => console.log("error :>>", err));
-      promises.push(promise);
-    });
-    return Promise.all(promises);
+        }
+      } catch (error) {
+        console.log("Error:", error);
+        return false;
+      }
+    }
+
+    console.log("All items have stock:", isStock);
+    return isStock;
   };
 
-  const updateStock = () => {
-    cartItems.forEach((prod) => {
-      prod.sizeSelected.forEach((element) => {
-        const aux = prod.sizes.filter((size) => size.name === element.name);
-        aux[0].stock = aux[0].stock - element.peritem;
-        if (aux[0].stock === 0) {
-          aux[0].inStock = false;
+  const updateStock = async () => {
+    for (const prod of cartItems) {
+      for (const element of prod.sizeSelected) {
+        console.log(element);
+        const size = prod.sizes.find((size) => size.name === element.name);
+        console.log();
+        if (size) {
+          size.stock -= element.peritem;
+          if (size.stock === 0) {
+            size.inStock = false;
+          }
         }
-      });
-      const itemRef = doc(db, "products", prod._id);
-      updateDoc(itemRef, prod);
-    });
+        const updatedProduct = {
+          _id: prod._id,
+          sizes: prod.sizes.map((size) => {
+            if (size.name === element.name) {
+              return {
+                ...size,
+                stock: size.stock - element.peritem,
+              };
+            } else {
+              return size;
+            }
+          }),
+        };
+
+        try {
+          const requestOptions = {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedProduct),
+          };
+
+          const response = await fetch(
+            `${process.env.API_FETCH_PATH}/api/clothes/${prod._id}`,
+            requestOptions
+          );
+
+          if (!response.ok) {
+            console.error(`Failed to update stock for product ${prod._id}`);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+    }
   };
 
   const validateForm = () => {
@@ -185,7 +229,6 @@ const CheckoutForm = () => {
   const endBuy = useCallback(() => {
     setForm(initialForm);
     clear();
-    // navigate("/");
   }, [clear, initialForm]);
 
   useEffect(() => {

@@ -5,7 +5,7 @@ import { CartContext } from "@/contexts/CartContextProvider";
 import Close from "@/components/atoms/icons/Close";
 
 const CartItem = ({ item }: any) => {
-  const { modifyCartItemQuantity, removeItem } = useContext(CartContext);
+  const { addItem, removeItem } = useContext(CartContext);
   const [selectedValue, setSelectedValue] = useState<number>(item.quantity);
   const [selectOptions, setSelectOptions] = useState<any>();
   const options = () => {
@@ -18,7 +18,7 @@ const CartItem = ({ item }: any) => {
 
   const handleSelectChange = (selectedValue: any) => {
     setSelectedValue(selectedValue);
-    modifyCartItemQuantity(item._id, selectedValue.value);
+    addItem(item, selectedValue.value);
   };
 
   useEffect(() => {
@@ -59,6 +59,7 @@ const CartItem = ({ item }: any) => {
               getOptionLabel={(option: any) => option.label}
               value={selectedValue}
               placeholder={size.peritem}
+              isDisabled
             />
           </div>
           <div>

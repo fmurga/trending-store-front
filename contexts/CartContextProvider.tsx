@@ -15,26 +15,37 @@ const CartContextProvider = ({ children }) => {
 
   const addItem = (item: any, quantity: number, selectedSize: string) => {
     if (isInCart(item._id)) {
-      const aux: any = cartItems.find((prod: any) => prod._id === item._id);
+      //busco producto de item._id = prod._id
+      const itemInCart: any = cartItems.find(
+        (prod: any) => prod._id === item._id
+      );
+      console.log("Item in cart", itemInCart);
+
+      //nuevo carro de todos los productos distintos al que esta
       const newCartItems: any = cartItems.filter(
         (prod: any) => prod._id !== item._id
       );
-      const isSize = aux.sizeSelected.filter(
+
+      const isSize = itemInCart.sizeSelected.find(
         (size: any) => size.name === selectedSize
       );
-      if (isSize.length === 0) {
+
+      if (!isSize) {
         const auxSize = { name: selectedSize, peritem: quantity };
-        aux.sizeSelected.push(auxSize);
+        itemInCart.sizeSelected.push(auxSize);
+        item.quantity += quantity;
       } else {
-        isSize.peritem = isSize.peritem + quantity;
+        isSize.peritem = quantity;
+        item.quantity = quantity;
       }
-      setCartItems([...newCartItems, aux]);
+      setCartItems([...newCartItems, itemInCart]);
     } else {
-      item.quantity = quantity;
       item.sizeSelected = [];
+      item.quantity = quantity;
       const auxSize = { name: selectedSize, peritem: quantity };
       item.sizeSelected.push(auxSize);
       setCartItems([...cartItems, item]);
+      console.log("Item not in cart", item);
     }
   };
 
@@ -54,16 +65,6 @@ const CartContextProvider = ({ children }) => {
     }
   };
 
-  const modifyCartItemQuantity = (
-    itemId: number,
-    newQuantity: number
-  ): void => {
-    const aux = cartItems.find((prod: any) => prod._id === itemId);
-    const newCartItems = cartItems.filter((prod: any) => prod._id !== itemId);
-    aux.quantity = newQuantity;
-    setCartItems([...newCartItems, aux]);
-  };
-
   const clear = () => {
     setCartItems([]);
   };
@@ -71,7 +72,7 @@ const CartContextProvider = ({ children }) => {
   const isInCart = (itemId: number) => {
     let i;
     for (i = 0; i < cartItems.length; i++) {
-      if (cartItems[i].id === itemId) {
+      if (cartItems[i]._id === itemId) {
         return true;
       }
     }
@@ -147,7 +148,6 @@ const CartContextProvider = ({ children }) => {
         clear,
         itemCount,
         cartItems,
-        modifyCartItemQuantity,
         total,
         subtotal,
         impuestos,

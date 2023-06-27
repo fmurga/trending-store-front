@@ -3,14 +3,16 @@
 import { CartContext } from "@/contexts/CartContextProvider";
 import Link from "next/link";
 import icon from "../../../images/trending-icon.png";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Image from "next/image";
 import NavItem from "@/components/molecules/NavItem/NavItem";
 import CartWidget from "@/components/atoms/CartWidget";
 import LoginWidget from "@/components/atoms/LoginWidget";
 import Menu from "@/components/atoms/icons/Menu";
+import { usePathname } from "next/navigation";
 
 const NavBar = ({ json }) => {
+  const path = usePathname();
   const [openNav, setOpenNav] = useState(false);
   const { itemCount } = useContext(CartContext);
 
@@ -62,7 +64,7 @@ const NavBar = ({ json }) => {
         </div>
         <div className="right hidden lg:flex lg:flex-row items-center justify-between gap-1">
           <CartWidget itemCount={itemCount} />
-          <LoginWidget />
+          {path !== "/auth/login" && <LoginWidget />}
         </div>
       </div>
     </nav>
