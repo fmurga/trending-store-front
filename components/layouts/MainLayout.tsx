@@ -2,7 +2,7 @@ import Footer from "../organisms/Footer/Footer";
 import NavBar from "../organisms/Navigation/NavBar";
 
 async function getLinks() {
-  const res = await fetch(`${process.env.API_PATH}/links`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_FETCH_PATH}/links`, {
     next: { revalidate: 60 },
   });
   // The return value is *not* serialized

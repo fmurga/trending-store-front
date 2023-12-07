@@ -5,9 +5,7 @@ import MainLayout from "@/components/layouts/MainLayout";
 import NoProducts from "@/components/extra/NoProducts";
 
 async function getProducts() {
-  const res = await fetch(`${process.env.API_PATH}/clothes`, {
-    next: { revalidate: 60 },
-  });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_FETCH_PATH}/clothes`);
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
 

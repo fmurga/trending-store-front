@@ -4,9 +4,12 @@ import NoProducts from "@/components/extra/NoProducts";
 import MainLayout from "@/components/layouts/MainLayout";
 import ItemDetail from "@/components/organisms/Product/ItemDetail";
 async function getProduct(id: string) {
-  const res = await fetch(`${process.env.API_PATH}/clothes/${id}`, {
-    next: { revalidate: 60 },
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_FETCH_PATH}/clothes/${id}`,
+    {
+      next: { revalidate: 5 },
+    }
+  );
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
 
